@@ -1,1 +1,0 @@
-<h2>powx-n Notes</h2><hr>[ Time taken: 23 hrs 14 m 13 s ]
