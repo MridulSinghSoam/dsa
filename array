@@ -1,0 +1,179 @@
+Nice choice 👍
+**Subarray sum** is a 🔥 **must-do array topic**.
+Below are **important questions + small, clean C++ code** (from basic → advanced).
+
+---
+
+# 1️⃣ Sum of ALL Subarrays
+
+👉 **Formula based** (interview favorite)
+
+```cpp
+int sumOfAllSubarrays(vector<int>& a) {
+    int n = a.size();
+    int ans = 0;
+
+    for(int i = 0; i < n; i++) {
+        ans += a[i] * (i + 1) * (n - i);
+    }
+    return ans;
+}
+```
+
+📌 Each element appears `(i+1)*(n-i)` times
+
+---
+
+# 2️⃣ Print Sum of Every Subarray
+
+```cpp
+void subarraySums(vector<int>& a) {
+    int n = a.size();
+
+    for(int i = 0; i < n; i++) {
+        int sum = 0;
+        for(int j = i; j < n; j++) {
+            sum += a[j];
+            cout << sum << " ";
+        }
+    }
+}
+```
+
+---
+
+# 3️⃣ Maximum Subarray Sum (Kadane’s Algorithm) ⭐
+
+```cpp
+int maxSubArray(vector<int>& a) {
+    int cur = 0, maxSum = INT_MIN;
+
+    for(int x : a) {
+        cur += x;
+        maxSum = max(maxSum, cur);
+        if(cur < 0) cur = 0;
+    }
+    return maxSum;
+}
+```
+
+---
+
+# 4️⃣ Subarray with Given Sum (Positive Numbers)
+
+```cpp
+bool subarraySum(vector<int>& a, int k) {
+    int l = 0, sum = 0;
+
+    for(int r = 0; r < a.size(); r++) {
+        sum += a[r];
+
+        while(sum > k)
+            sum -= a[l++];
+
+        if(sum == k)
+            return true;
+    }
+    return false;
+}
+```
+
+---
+
+# 5️⃣ Count Subarrays with Given Sum (Prefix Sum + Hashmap) 🔥
+
+```cpp
+int countSubarrays(vector<int>& a, int k) {
+    unordered_map<int,int> mp;
+    mp[0] = 1;
+
+    int sum = 0, cnt = 0;
+
+    for(int x : a) {
+        sum += x;
+        cnt += mp[sum - k];
+        mp[sum]++;
+    }
+    return cnt;
+}
+```
+
+✔ Works with **negative numbers**
+
+---
+
+# 6️⃣ Longest Subarray with Sum = K
+
+```cpp
+int longestSubarray(vector<int>& a, int k) {
+    unordered_map<int,int> mp;
+    int sum = 0, ans = 0;
+
+    for(int i = 0; i < a.size(); i++) {
+        sum += a[i];
+
+        if(sum == k)
+            ans = i + 1;
+
+        if(mp.count(sum - k))
+            ans = max(ans, i - mp[sum - k]);
+
+        if(!mp.count(sum))
+            mp[sum] = i;
+    }
+    return ans;
+}
+```
+
+---
+
+# 7️⃣ Minimum Subarray Length with Sum ≥ K
+
+```cpp
+int minSubArrayLen(int k, vector<int>& a) {
+    int l = 0, sum = 0, ans = INT_MAX;
+
+    for(int r = 0; r < a.size(); r++) {
+        sum += a[r];
+
+        while(sum >= k) {
+            ans = min(ans, r - l + 1);
+            sum -= a[l++];
+        }
+    }
+    return ans == INT_MAX ? 0 : ans;
+}
+```
+
+---
+
+# 🔥 MUST-REMEMBER PATTERNS
+
+| Problem              | Technique      |
+| -------------------- | -------------- |
+| Max subarray sum     | Kadane         |
+| Count subarrays      | Prefix + map   |
+| Fixed sum (positive) | Sliding window |
+| All subarray sum     | Math formula   |
+| Longest subarray     | Prefix + map   |
+
+---
+
+## 🎯 INTERVIEW TIP
+
+If you hear:
+
+* **“sum = k” + negative numbers** → Prefix sum
+* **“maximum / minimum”** → Sliding window / Kadane
+* **“count subarrays”** → Hashmap
+
+---
+
+Want next?
+
+* ✅ **Subarray XOR problems**
+* ✅ **Sliding window question set**
+* ✅ **LeetCode array roadmap**
+* ✅ **1-page DSA revision sheet**
+
+Just tell me 🔥
