@@ -1,22 +1,23 @@
 class Solution {
 public:
-    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        vector<vector<int>> result;
-        vector<int> curr;
-        back(0,result,curr,candidates,target);
-        return result;
-    }
-    void back(int index,vector<vector<int>> &result,vector<int> &curr,vector<int> &candidates,int target){
-        if(target==0){
-            result.push_back(curr);
+    void rec(vector<int>& candidates, int target , int index ,vector<vector<int>> &ans,vector<int> &small){
+        if(index==candidates.size()){
+            if(target==0){
+                ans.push_back(small);
+            }
             return ;
         }
-
-        if(target<0) return ;
-        for(int i=index;i<candidates.size();i++){
-            curr.push_back(candidates[i]);
-            back(i, result, curr, candidates,  target - candidates[i]);
-            curr.pop_back();
+        if(target>=candidates[index]){
+            small.push_back(candidates[index]);
+            rec(candidates,target-candidates[index],index,ans,small);
+            small.pop_back();
         }
+        rec(candidates,target,index+1,ans,small);
+    }
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<int> small;
+        vector<vector<int>> ans;
+        rec(candidates,target,0,ans,small);
+        return ans;
     }
 };
